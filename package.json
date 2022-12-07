@@ -1,13 +1,14 @@
 {
   "name": "reddit-api-client",
   "version": "0.0.1",
-  "description": "Node.js / JavaScript client for Reddit API",
+  "description": "Node.js / TypeScript client for Reddit API",
   "main": "dist/index.js",
   "scripts": {
     "prestart": "npm run build",
-    "start": "serverless offline",
+    "start": "",
     "build": "tsc",
-    "test": "jest"
+    "test": "jest tests/unit",
+    "e2etest": "jest tests/e2e"
   },
   "files": [
     "dist/*"
@@ -17,6 +18,8 @@
   "dependencies": {
     "@types/node": "^18.11.9",
     "@types/oauth": "^0.9.1",
+    "axios": "^1.2.0",
+    "dotenv": "^16.0.3",
     "oauth": "^0.10.0",
     "typescript": "^4.9.3"
   },

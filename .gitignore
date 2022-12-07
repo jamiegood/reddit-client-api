@@ -6,4 +6,9 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+.env
 
+
+runner.ts
+reddit.js
+reddit-curl.txt
