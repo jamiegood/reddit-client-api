@@ -75,10 +75,12 @@ class RedditClient {
       throw Error("Reddit auth call failed.");
     }
   }
-  public async getNewPosts(subreddit: string, afterParam?: string | null, depth: number = 3): Promise<IListingNewChildren[]> {
+  public async getNewPosts(subreddit: string, depth: number = 10, afterParam?: string | null): Promise<IListingNewChildren[]> {
     if (!this.accessToken) {
       throw Error("Unable to make request. Authentication has not been established");
     }
+
+    console.log(`DEPTH:: ${depth}`);
 
     const newDepth = depth - 1;
     try {
@@ -87,7 +89,7 @@ class RedditClient {
       afterParam = response.data.data.after;
 
       if (afterParam && newDepth > 0) {
-        const additionalPosts = await this.getNewPosts(subreddit, afterParam, newDepth);
+        const additionalPosts = await this.getNewPosts(subreddit, newDepth, afterParam);
         return [...parsedPosts, ...additionalPosts];
       }
       return parsedPosts;

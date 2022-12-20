@@ -18,7 +18,7 @@ describe("testing E2E RedditClient. This calls the Reddit API", () => {
 
     posts.forEach((post) => {
       console.log(post.data.title);
-      console.log(new Date(post.data.created * 1000));
+      //console.log(new Date(post.data.created * 1000));
     });
     expect(posts).toBeInstanceOf(Object);
   });
