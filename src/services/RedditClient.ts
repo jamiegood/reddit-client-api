@@ -99,6 +99,54 @@ class RedditClient {
     }
   }
 
+  public async getHotPosts(subreddit: string, depth: number = 10, afterParam?: string | null): Promise<IListingNewChildren[]> {
+    if (!this.accessToken) {
+      throw Error("Unable to make request. Authentication has not been established");
+    }
+
+    console.log(`DEPTH:: ${depth}`);
+
+    const newDepth = depth - 1;
+    try {
+      const response = await axios.get<IListingNew>(`https://oauth.reddit.com/r/${subreddit}/hot/?after=${afterParam}&limit=25`, this.requestConfig);
+      const parsedPosts = response.data.data.children as IListingNewChildren[];
+      afterParam = response.data.data.after;
+
+      if (afterParam && newDepth > 0) {
+        const additionalPosts = await this.getNewPosts(subreddit, newDepth, afterParam);
+        return [...parsedPosts, ...additionalPosts];
+      }
+      return parsedPosts;
+    } catch (error) {
+      console.log(error);
+      throw Error("getNewPosts error");
+    }
+  }
+
+  public async getRisingPosts(subreddit: string, depth: number = 10, afterParam?: string | null): Promise<IListingNewChildren[]> {
+    if (!this.accessToken) {
+      throw Error("Unable to make request. Authentication has not been established");
+    }
+
+    console.log(`DEPTH:: ${depth}`);
+
+    const newDepth = depth - 1;
+    try {
+      const response = await axios.get<IListingNew>(`https://oauth.reddit.com/r/${subreddit}/rising/?after=${afterParam}&limit=25`, this.requestConfig);
+      const parsedPosts = response.data.data.children as IListingNewChildren[];
+      afterParam = response.data.data.after;
+
+      if (afterParam && newDepth > 0) {
+        const additionalPosts = await this.getNewPosts(subreddit, newDepth, afterParam);
+        return [...parsedPosts, ...additionalPosts];
+      }
+      return parsedPosts;
+    } catch (error) {
+      console.log(error);
+      throw Error("getNewPosts error");
+    }
+  }
+
   public async getPostComments(subbreddit: string, postID: string): Promise<IListingNew> {
     try {
       const response = await axios.get(`https://oauth.reddit.com/r/${subbreddit}/comments/${postID}`, this.requestConfig);
