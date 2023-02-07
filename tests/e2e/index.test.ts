@@ -14,7 +14,7 @@ describe("testing E2E RedditClient. This calls the Reddit API", () => {
     };
     const myRedditClient = new RedditClient(config);
     await myRedditClient.auth({ username: `${process.env.USERNAME}`, password: `${process.env.PASSWORD}` });
-    const posts: IListingNewChildren[] = await myRedditClient.getNewPosts("sideproject", 1);
+    const posts: IListingNewChildren[] = await myRedditClient.getNewPosts("sideproject", 25, 1);
 
     posts.forEach((post) => {
       console.log(post.data.title);
@@ -30,7 +30,7 @@ describe("testing E2E RedditClient. This calls the Reddit API", () => {
     };
     const myRedditClient = new RedditClient(config);
     await myRedditClient.auth({ username: `${process.env.USERNAME}`, password: `${process.env.PASSWORD}` });
-    const posts: IListingNewChildren[] = await myRedditClient.getHotPosts("sideproject", 1);
+    const posts: IListingNewChildren[] = await myRedditClient.getHotPosts("sideproject", 25, 1);
 
     posts.forEach((post) => {
       console.log(post.data.title);
@@ -46,7 +46,7 @@ describe("testing E2E RedditClient. This calls the Reddit API", () => {
     };
     const myRedditClient = new RedditClient(config);
     await myRedditClient.auth({ username: `${process.env.USERNAME}`, password: `${process.env.PASSWORD}` });
-    const posts: IListingNewChildren[] = await myRedditClient.getRisingPosts("sideproject", 1);
+    const posts: IListingNewChildren[] = await myRedditClient.getRisingPosts("sideproject", 25, 1);
 
     posts.forEach((post) => {
       console.log(post.data.title);

@@ -30,3 +30,8 @@ To Run (using ts-node)
     ts-node runner.ts
 
 https://www.reddit.com/dev/api/
+
+# TODO
+
+- Add default limit to get new call. Hardcoded to 25
+-
