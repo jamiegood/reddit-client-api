@@ -10,7 +10,15 @@ declare class RedditClient {
     setToken(token: string): void;
     setUserAgent(userAgent: string): void;
     auth(authOptions: IClientAuthOptions): Promise<this>;
-    getNewPosts(subreddit: string, afterParam?: string | null, depth?: number): Promise<IListingNewChildren[]>;
+    private listingRequestor;
+    getNewPosts(limit?: number, depth?: number, afterParam?: string | null): Promise<IListingNewChildren[]>;
+    getNewPostsBySubreddit(subreddit: string, limit?: number, depth?: number, afterParam?: string | null): Promise<IListingNewChildren[]>;
+    getHotPosts(limit?: number, depth?: number, afterParam?: string | null): Promise<IListingNewChildren[]>;
+    getHotPostsBySubreddit(subreddit: string, limit?: number, depth?: number, afterParam?: string | null): Promise<IListingNewChildren[]>;
+    getRisingPosts(limit?: number, depth?: number, afterParam?: string | null): Promise<IListingNewChildren[]>;
+    getRisingPostsBySubreddit(subreddit: string, limit?: number, depth?: number, afterParam?: string | null): Promise<IListingNewChildren[]>;
+    getBest(limit?: number, depth?: number, afterParam?: string | null): Promise<IListingNewChildren[]>;
+    getBestBySubreddit(subreddit: string, limit?: number, depth?: number, afterParam?: string | null): Promise<IListingNewChildren[]>;
     getPostComments(subbreddit: string, postID: string): Promise<IListingNew>;
 }
 export default RedditClient;

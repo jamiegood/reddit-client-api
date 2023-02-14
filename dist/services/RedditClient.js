@@ -49,6 +49,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __importDefault(require("axios"));
+var BASE_URL = "https://oauth.reddit.com/";
 var RedditClient = /** @class */ (function () {
     function RedditClient(options) {
         this.accessToken = "";
@@ -107,7 +108,7 @@ var RedditClient = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, (0, axios_1.default)(this.authConfig)];
+                        return [4 /*yield*/, axios_1.default.request(this.authConfig)];
                     case 2:
                         response = _a.sent();
                         this.setToken(response.data.access_token);
@@ -122,27 +123,25 @@ var RedditClient = /** @class */ (function () {
             });
         });
     };
-    RedditClient.prototype.getNewPosts = function (subreddit, afterParam, depth) {
-        if (depth === void 0) { depth = 3; }
+    RedditClient.prototype.listingRequestor = function (listingRequest) {
         return __awaiter(this, void 0, void 0, function () {
-            var newDepth, response, parsedPosts, additionalPosts, error_2;
+            var subreddit, listType, limit, depth, afterParam, url, newDepth, response, parsedPosts, additionalPosts, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!this.accessToken) {
-                            throw Error("Unable to make request. Authentication has not been established");
-                        }
+                        subreddit = listingRequest.subreddit, listType = listingRequest.listType, limit = listingRequest.limit, depth = listingRequest.depth, afterParam = listingRequest.afterParam;
+                        url = "".concat(BASE_URL).concat(subreddit).concat(listType, "/?after=").concat(afterParam, "&limit=").concat(limit);
                         newDepth = depth - 1;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 5, , 6]);
-                        return [4 /*yield*/, axios_1.default.get("https://oauth.reddit.com/r/".concat(subreddit, "/new/?after=").concat(afterParam, "&limit=25"), this.requestConfig)];
+                        return [4 /*yield*/, axios_1.default.get("".concat(url), this.requestConfig)];
                     case 2:
                         response = _a.sent();
                         parsedPosts = response.data.data.children;
                         afterParam = response.data.data.after;
                         if (!(afterParam && newDepth > 0)) return [3 /*break*/, 4];
-                        return [4 /*yield*/, this.getNewPosts(subreddit, afterParam, newDepth)];
+                        return [4 /*yield*/, this.listingRequestor({ subreddit: subreddit, listType: listType, limit: limit, depth: newDepth, afterParam: afterParam })];
                     case 3:
                         additionalPosts = _a.sent();
                         return [2 /*return*/, __spreadArray(__spreadArray([], parsedPosts, true), additionalPosts, true)];
@@ -150,26 +149,298 @@ var RedditClient = /** @class */ (function () {
                     case 5:
                         error_2 = _a.sent();
                         console.log(error_2);
-                        throw Error("getNewPosts error");
+                        throw Error("listingRequestor error");
                     case 6: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    RedditClient.prototype.getNewPosts = function (limit, depth, afterParam) {
+        if (limit === void 0) { limit = 25; }
+        if (depth === void 0) { depth = 10; }
+        return __awaiter(this, void 0, void 0, function () {
+            var listingRequest, posts, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!this.accessToken) {
+                            throw Error("Unable to make request. Authentication has not been established");
+                        }
+                        listingRequest = {
+                            subreddit: "",
+                            listType: "new",
+                            limit: limit,
+                            depth: depth,
+                            afterParam: afterParam || "",
+                        };
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.listingRequestor(listingRequest)];
+                    case 2:
+                        posts = _a.sent();
+                        return [2 /*return*/, posts];
+                    case 3:
+                        error_3 = _a.sent();
+                        console.log(error_3);
+                        throw Error("getNewPostsBySubreddit error");
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    RedditClient.prototype.getNewPostsBySubreddit = function (subreddit, limit, depth, afterParam) {
+        if (limit === void 0) { limit = 25; }
+        if (depth === void 0) { depth = 10; }
+        return __awaiter(this, void 0, void 0, function () {
+            var listingRequest, posts, error_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!this.accessToken) {
+                            throw Error("Unable to make request. Authentication has not been established");
+                        }
+                        listingRequest = {
+                            subreddit: subreddit ? "r/".concat(subreddit, "/") : "",
+                            listType: "new",
+                            limit: limit,
+                            depth: depth,
+                            afterParam: afterParam || "",
+                        };
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.listingRequestor(listingRequest)];
+                    case 2:
+                        posts = _a.sent();
+                        return [2 /*return*/, posts];
+                    case 3:
+                        error_4 = _a.sent();
+                        console.log(error_4);
+                        throw Error("getNewPostsBySubreddit error");
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    RedditClient.prototype.getHotPosts = function (limit, depth, afterParam) {
+        if (limit === void 0) { limit = 25; }
+        if (depth === void 0) { depth = 10; }
+        return __awaiter(this, void 0, void 0, function () {
+            var listingRequest, posts, error_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!this.accessToken) {
+                            throw Error("Unable to make request. Authentication has not been established");
+                        }
+                        listingRequest = {
+                            subreddit: "",
+                            listType: "hot",
+                            limit: limit,
+                            depth: depth,
+                            afterParam: afterParam || "",
+                        };
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.listingRequestor(listingRequest)];
+                    case 2:
+                        posts = _a.sent();
+                        return [2 /*return*/, posts];
+                    case 3:
+                        error_5 = _a.sent();
+                        console.log(error_5);
+                        throw Error("getNewPostsBySubreddit error");
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    RedditClient.prototype.getHotPostsBySubreddit = function (subreddit, limit, depth, afterParam) {
+        if (limit === void 0) { limit = 25; }
+        if (depth === void 0) { depth = 10; }
+        return __awaiter(this, void 0, void 0, function () {
+            var listingRequest, posts, error_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!this.accessToken) {
+                            throw Error("Unable to make request. Authentication has not been established");
+                        }
+                        listingRequest = {
+                            subreddit: subreddit ? "r/".concat(subreddit, "/") : "",
+                            listType: "hot",
+                            limit: limit,
+                            depth: depth,
+                            afterParam: afterParam || "",
+                        };
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.listingRequestor(listingRequest)];
+                    case 2:
+                        posts = _a.sent();
+                        return [2 /*return*/, posts];
+                    case 3:
+                        error_6 = _a.sent();
+                        console.log(error_6);
+                        throw Error("getNewPostsBySubreddit error");
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    RedditClient.prototype.getRisingPosts = function (limit, depth, afterParam) {
+        if (limit === void 0) { limit = 25; }
+        if (depth === void 0) { depth = 10; }
+        return __awaiter(this, void 0, void 0, function () {
+            var listingRequest, posts, error_7;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!this.accessToken) {
+                            throw Error("Unable to make request. Authentication has not been established");
+                        }
+                        listingRequest = {
+                            subreddit: "",
+                            listType: "rising",
+                            limit: limit,
+                            depth: depth,
+                            afterParam: afterParam || "",
+                        };
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.listingRequestor(listingRequest)];
+                    case 2:
+                        posts = _a.sent();
+                        return [2 /*return*/, posts];
+                    case 3:
+                        error_7 = _a.sent();
+                        console.log(error_7);
+                        throw Error("getNewPostsBySubreddit error");
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    RedditClient.prototype.getRisingPostsBySubreddit = function (subreddit, limit, depth, afterParam) {
+        if (limit === void 0) { limit = 25; }
+        if (depth === void 0) { depth = 10; }
+        return __awaiter(this, void 0, void 0, function () {
+            var listingRequest, posts, error_8;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!this.accessToken) {
+                            throw Error("Unable to make request. Authentication has not been established");
+                        }
+                        listingRequest = {
+                            subreddit: subreddit ? "r/".concat(subreddit, "/") : "",
+                            listType: "rising",
+                            limit: limit,
+                            depth: depth,
+                            afterParam: afterParam || "",
+                        };
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.listingRequestor(listingRequest)];
+                    case 2:
+                        posts = _a.sent();
+                        return [2 /*return*/, posts];
+                    case 3:
+                        error_8 = _a.sent();
+                        console.log(error_8);
+                        throw Error("getNewPostsBySubreddit error");
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    RedditClient.prototype.getBest = function (limit, depth, afterParam) {
+        if (limit === void 0) { limit = 25; }
+        if (depth === void 0) { depth = 10; }
+        return __awaiter(this, void 0, void 0, function () {
+            var listingRequest, posts, error_9;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!this.accessToken) {
+                            throw Error("Unable to make request. Authentication has not been established");
+                        }
+                        listingRequest = {
+                            subreddit: "",
+                            listType: "best",
+                            limit: limit,
+                            depth: depth,
+                            afterParam: afterParam || "",
+                        };
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.listingRequestor(listingRequest)];
+                    case 2:
+                        posts = _a.sent();
+                        return [2 /*return*/, posts];
+                    case 3:
+                        error_9 = _a.sent();
+                        console.log(error_9);
+                        throw Error("getBest error");
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    RedditClient.prototype.getBestBySubreddit = function (subreddit, limit, depth, afterParam) {
+        if (limit === void 0) { limit = 25; }
+        if (depth === void 0) { depth = 10; }
+        return __awaiter(this, void 0, void 0, function () {
+            var listingRequest, posts, error_10;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!this.accessToken) {
+                            throw Error("Unable to make request. Authentication has not been established");
+                        }
+                        listingRequest = {
+                            subreddit: subreddit ? "r/".concat(subreddit, "/") : "",
+                            listType: "best",
+                            limit: limit,
+                            depth: depth,
+                            afterParam: afterParam || "",
+                        };
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.listingRequestor(listingRequest)];
+                    case 2:
+                        posts = _a.sent();
+                        return [2 /*return*/, posts];
+                    case 3:
+                        error_10 = _a.sent();
+                        console.log(error_10);
+                        throw Error("getBestBySubreddit error");
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
     RedditClient.prototype.getPostComments = function (subbreddit, postID) {
         return __awaiter(this, void 0, void 0, function () {
-            var response, error_3;
+            var response, error_11;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, axios_1.default.get("https://oauth.reddit.com/r/".concat(subbreddit, "/comments/").concat(postID), this.requestConfig)];
+                        return [4 /*yield*/, axios_1.default.get("".concat(BASE_URL, "/r/").concat(subbreddit, "/comments/").concat(postID), this.requestConfig)];
                     case 1:
                         response = _a.sent();
                         return [2 /*return*/, response.data];
                     case 2:
-                        error_3 = _a.sent();
-                        console.log(error_3);
+                        error_11 = _a.sent();
+                        console.log(error_11);
                         throw Error("getNewPosts error");
                     case 3: return [2 /*return*/];
                 }
