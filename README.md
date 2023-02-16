@@ -32,18 +32,16 @@ Endpoints Completed so far:
 Mostly the 'listing section' https://www.reddit.com/dev/api/#section_listings
 
 - /api/v1/access_token
-
-/new/
-
-/r/_subreddit_/new/
-/hot/
-/r/_subreddit_/hot/
-/rising/
-/r/_subreddit_/rising/
-/hot/
-/r/_subreddit_/hot/
-/r/best/
-/r/_subreddit_/best/
+- /new/
+- /r/_subreddit_/new/
+- /hot/
+- /r/_subreddit_/hot/
+- /rising/
+- /r/_subreddit_/rising/
+- /hot/
+- /r/_subreddit_/hot/
+- /r/best/
+- /r/_subreddit_/best/
 
 Where _subreddit_ is the name of the subredit
 
