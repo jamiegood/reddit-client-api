@@ -15,7 +15,7 @@ The purpose of this repo is to create a Reddit Client with TypeScript. I'm on a 
 
 If you are also interested in learning TypeScript feel free to contribute.
 
-Read the [Contributing Guide](CONTRIBUTING.md) to get started. Then pick an endpoint from the Reddit API docs and create a pull request.
+Read the [Contributing Guide](https://github.com/jamiegood/reddit-client-api/blob/main/CONTRIBUTING.md) to get started. Then pick an endpoint from the Reddit API docs and create a pull request.
 
 Just be sure to add unit and e2e tests 🙏🏼
 
@@ -31,9 +31,10 @@ Endpoints Completed so far:
 
 Mostly the 'listing section' https://www.reddit.com/dev/api/#section_listings
 
-/api/v1/access_token
+- /api/v1/access_token
 
 /new/
+
 /r/_subreddit_/new/
 /hot/
 /r/_subreddit_/hot/
@@ -71,7 +72,7 @@ Where _subreddit_ is the name of the subredit
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE)
+This project is licensed under the [MIT License](https://github.com/jamiegood/reddit-client-api/blob/main/LICENSE)
 
 ## Get Help
 
@@ -85,7 +86,7 @@ Pull requests are always welcome, and I'll do my best to do reviews as fast as I
 
 In the case of a bug report, bugfix or a suggestions, please feel very free to open an issue too.
 
-Please refer to the [contribution guide](CONTRIBUTING.md) to see how to get started.
+Please refer to the [contribution guide](https://github.com/jamiegood/reddit-client-api/blob/main/CONTRIBUTING.md) to see how to get started.
 
 ## References
 

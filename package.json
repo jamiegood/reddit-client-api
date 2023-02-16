@@ -1,8 +1,22 @@
 {
   "name": "reddit-client-api",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Node.js / TypeScript client for Reddit API",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jamiegood/reddit-client-api.git"
+  },
+  "keywords": [
+    "node.js",
+    "javascript",
+    "reddit",
+    "api"
+  ],
+  "bugs": {
+    "url": "https://github.com/jamiegood/reddit-client-api/issues"
+  },
+  "homepage": "https://github.com/jamiegood/reddit-client-api",
   "scripts": {
     "prestart": "npm run build",
     "start": "",
