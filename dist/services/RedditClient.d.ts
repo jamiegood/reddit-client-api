@@ -1,6 +1,7 @@
 import IClientOptions from "../interfaces/IClientOptions";
 import IClientAuthOptions from "../interfaces/IClientAuthOptions";
 import { IListingNew, IListingNewChildren } from "../interfaces/IListingNew";
+import { IListings } from "../interfaces/IListings";
 declare class RedditClient {
     accessToken: string;
     userAgent: string;
@@ -20,5 +21,7 @@ declare class RedditClient {
     getBest(limit?: number, depth?: number, afterParam?: string | null): Promise<IListingNewChildren[]>;
     getBestBySubreddit(subreddit: string, limit?: number, depth?: number, afterParam?: string | null): Promise<IListingNewChildren[]>;
     getPostComments(subbreddit: string, postID: string): Promise<IListingNew>;
+    getPostDuplicate(postID: string): Promise<IListings[]>;
+    getRandom(subreddit?: string): Promise<IListings[]>;
 }
 export default RedditClient;

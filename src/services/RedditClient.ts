@@ -3,7 +3,8 @@ import axios from "axios";
 import IClientOptions from "../interfaces/IClientOptions";
 import IClientAuthOptions from "../interfaces/IClientAuthOptions";
 import { IListingNew, IListingNewChildren } from "../interfaces/IListingNew";
-import { setuid } from "process";
+import { IListings } from "../interfaces/IListings";
+
 interface IListingRequestor {
   subreddit: string | null;
   listType: string;
@@ -91,6 +92,7 @@ class RedditClient {
     const newDepth = depth - 1;
     try {
       const response = await axios.get<IListingNew>(`${url}`, this.requestConfig);
+      console.log(response.data);
       const parsedPosts = response.data.data.children as IListingNewChildren[];
       afterParam = response.data.data.after;
 
@@ -285,6 +287,27 @@ class RedditClient {
     } catch (error) {
       console.log(error);
       throw Error("getNewPosts error");
+    }
+  }
+
+  public async getPostDuplicate(postID: string): Promise<IListings[]> {
+    try {
+      const response = await axios.get(`${BASE_URL}/duplicates/${postID}`, this.requestConfig);
+      return response.data as IListings[];
+    } catch (error) {
+      console.log(error);
+      throw Error("getNewPosts error");
+    }
+  }
+
+  public async getRandom(subreddit?: string): Promise<IListings[]> {
+    try {
+      const response = await axios.get(`${BASE_URL}/${subreddit ? `r/${subreddit}/` : ""}random`, this.requestConfig);
+
+      return response.data as IListings[];
+    } catch (error) {
+      console.log(error);
+      throw Error("getRandom error");
     }
   }
 }

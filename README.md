@@ -64,8 +64,29 @@ Where _subreddit_ is the name of the subredit
 
     // get Rising Posts limited to 2 posts per page and 2 pages
     const risingPosts = await myRedditClient.getRisingPosts(2, 2);
+    // get Rising Posts by Subreddit sideproject
     const risingSideprojectPosts = await myRedditClient.getRisingPostsBySubreddit('sideproject', 2, 2);
 
+    // get New Posts limited to 2 posts per page and 2 pages
+    const newPosts = await myRedditClient.getNewPosts(2, 2);
+    // get New Posts by Subreddit sideproject
+    const newSideprojectPosts = await myRedditClient.getNewPostsBySubreddit('sideproject', 2, 2);
+
+    // get Hot Posts limited to 2 posts per page and 2 pages
+    const hotPosts = await myRedditClient.getHotPosts(2, 2);
+    // get Hot Posts by Subreddit sideproject
+    const hotSideprojectPosts = await myRedditClient.getHotPostsBySubreddit('sideproject', 2, 2);
+
+    // get Hot Posts limited to 2 posts per page and 2 pages
+    const bestPosts = await myRedditClient.getBestPosts(2, 2);
+    // get Hot Posts by Subreddit sideproject
+    const bestSideprojectPosts = await myRedditClient.getBestBySubreddit('sideproject', 2, 2);
+
+
+    // get duplicate posts
+    const duplicateListingForPost = await myRedditClient.getPostDuplicate(postID);
+    // get random
+    const randomPost = await myRedditClient.getRandom();
 ```
 
 ## License

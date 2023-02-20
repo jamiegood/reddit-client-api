@@ -138,6 +138,7 @@ var RedditClient = /** @class */ (function () {
                         return [4 /*yield*/, axios_1.default.get("".concat(url), this.requestConfig)];
                     case 2:
                         response = _a.sent();
+                        console.log(response.data);
                         parsedPosts = response.data.data.children;
                         afterParam = response.data.data.after;
                         if (!(afterParam && newDepth > 0)) return [3 /*break*/, 4];
@@ -441,6 +442,46 @@ var RedditClient = /** @class */ (function () {
                     case 2:
                         error_11 = _a.sent();
                         console.log(error_11);
+                        throw Error("getNewPosts error");
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    RedditClient.prototype.getPostDuplicate = function (postID) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, error_12;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, axios_1.default.get("".concat(BASE_URL, "/duplicates/").concat(postID), this.requestConfig)];
+                    case 1:
+                        response = _a.sent();
+                        return [2 /*return*/, response.data];
+                    case 2:
+                        error_12 = _a.sent();
+                        console.log(error_12);
+                        throw Error("getNewPosts error");
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    RedditClient.prototype.getRandom = function (subreddit) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, error_13;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, axios_1.default.get("".concat(BASE_URL, "/").concat(subreddit ? "r/".concat(subreddit, "/") : "", "random"), this.requestConfig)];
+                    case 1:
+                        response = _a.sent();
+                        return [2 /*return*/, response.data];
+                    case 2:
+                        error_13 = _a.sent();
+                        console.log(error_13);
                         throw Error("getNewPosts error");
                     case 3: return [2 /*return*/];
                 }

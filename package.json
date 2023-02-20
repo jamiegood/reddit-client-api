@@ -1,6 +1,6 @@
 {
   "name": "reddit-client-api",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Node.js / TypeScript client for Reddit API",
   "main": "dist/index.js",
   "repository": {

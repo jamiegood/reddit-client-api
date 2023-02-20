@@ -2,6 +2,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 import RedditClient from "../../src/index";
+import { IListings } from "../../src/interfaces/IListings";
 
 import { IListingNewChildren } from "../../src/interfaces/IListingNew";
 
@@ -100,5 +101,53 @@ describe("testing E2E RedditClient. This calls the Reddit API", () => {
       console.log(new Date(post.data.created * 1000));
     });
     expect(posts).toBeInstanceOf(Object);
+  });
+
+  test("Get getRandomBySubreddit", async () => {
+    const config = {
+      apiKey: `${process.env.REDDIT_APIKEY}`,
+      apiSecret: `${process.env.REDDIT_APISECRET}`,
+      userAgent: `${process.env.USERAGENT}`,
+    };
+    const myRedditClient = new RedditClient(config);
+    await myRedditClient.auth({ username: `${process.env.USERNAME}`, password: `${process.env.PASSWORD}` });
+    const listingsSub: IListings[] = await myRedditClient.getRandom("sideproject");
+    listingsSub.forEach((listing) => {
+      console.log(listing.kind);
+
+      listing.data.children.forEach((post) => {
+        console.log(post.data.title);
+      });
+    });
+    expect(listingsSub).toBeInstanceOf(Object);
+
+    const listings: IListings[] = await myRedditClient.getRandom();
+    listings.forEach((listing) => {
+      console.log(listing.kind);
+
+      listing.data.children.forEach((post) => {
+        console.log(post.data.title);
+      });
+    });
+    expect(listings).toBeInstanceOf(Object);
+  });
+
+  test("Get Duplicate Posts", async () => {
+    const config = {
+      apiKey: `${process.env.REDDIT_APIKEY}`,
+      apiSecret: `${process.env.REDDIT_APISECRET}`,
+      userAgent: `${process.env.USERAGENT}`,
+    };
+    const myRedditClient = new RedditClient(config);
+    await myRedditClient.auth({ username: `${process.env.USERNAME}`, password: `${process.env.PASSWORD}` });
+    const listings: IListings[] = await myRedditClient.getPostDuplicate("113m7lh");
+    listings.forEach((listing) => {
+      console.log(listing.kind);
+
+      listing.data.children.forEach((post) => {
+        console.log(post.data.title);
+      });
+    });
+    expect(listings).toBeInstanceOf(Object);
   });
 });
