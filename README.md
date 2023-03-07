@@ -50,11 +50,13 @@ Where _subreddit_ is the name of the subredit
 
 ## Install
 
-        npm i reddit-client-api
+```sh
+    npm i reddit-client-api
+```
 
 ## Usage
 
-```
+```typescript
     import RedditClient from "reddit-client-api";
 
     const config = {
