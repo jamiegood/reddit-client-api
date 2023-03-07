@@ -42,6 +42,9 @@ Mostly the 'listing section' https://www.reddit.com/dev/api/#section_listings
 - /r/_subreddit_/hot/
 - /r/best/
 - /r/_subreddit_/best/
+- /r/_subreddit_/random/
+- /r/_subreddit_/comments/_postId_
+- /duplicates/_postId_
 
 Where _subreddit_ is the name of the subredit
 
