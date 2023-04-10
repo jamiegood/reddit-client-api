@@ -238,7 +238,7 @@ class RedditClient {
     }
   }
 
-  public async getBest(limit: number = 25, depth: number = 10, afterParam?: string | null): Promise<IListingNewChildren[]> {
+  public async getBestPosts(limit: number = 25, depth: number = 10, afterParam?: string | null): Promise<IListingNewChildren[]> {
     if (!this.accessToken) {
       throw Error("Unable to make request. Authentication has not been established");
     }
