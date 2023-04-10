@@ -47,7 +47,7 @@ describe("testing E2E RedditClient. This calls the Reddit API", () => {
     };
     const myRedditClient = new RedditClient(config);
     await myRedditClient.auth({ username: `${process.env.USERNAME}`, password: `${process.env.PASSWORD}` });
-    const posts: IListingNewChildren[] = await myRedditClient.getBest(2, 2);
+    const posts: IListingNewChildren[] = await myRedditClient.getBestPosts(2, 2);
     posts.forEach((post) => {
       console.log(post.data.title);
       //console.log(new Date(post.data.created * 1000));
