@@ -92,7 +92,6 @@ class RedditClient {
     const newDepth = depth - 1;
     try {
       const response = await axios.get<IListingNew>(`${url}`, this.requestConfig);
-      console.log(response.data);
       const parsedPosts = response.data.data.children as IListingNewChildren[];
       afterParam = response.data.data.after;
 
